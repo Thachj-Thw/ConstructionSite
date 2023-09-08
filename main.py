@@ -7,7 +7,7 @@ from PyQt5.QtGui import QCloseEvent
 from PyQt5.uic import loadUi
 from Cache import Cache, CacheObject
 from DHConstructionSite import ConstructionSiteReport
-import json
+import re
 
 
 class Worker(QThread):
@@ -23,23 +23,46 @@ class Worker(QThread):
         self.data = data
     
     @staticmethod
-    def change_format(inp):
-        return "%sh%sp" % tuple(inp.split(":"))
+    def format_time(inp: str) -> str:
+        return "%sh%sp" % tuple(inp.split(":")) if inp else ""
+
+    @staticmethod
+    def split_data(data: str) -> (str, str, str, str, str, str, str, list, list):
+        split = data.split("\n")
+        if len(split) < 4:
+            raise Exception("Invalid format! Must be:\ndd/mm/yyyy (ngày đi ct)\nTên công trình\nMã công trình\nhh:mm-hh:mm (giờ làm và  nghỉ sáng)\nViệc 1 sáng làm\nViệc 2 sáng làm\nhh:mm-hh:mm (giờ làm và nghỉ chiều)\nViệc 1 chiều làm\nViệc 2 chiều làm\n\n\nCác ngày cách nhau tối thiểu 2 khoảng trống")
+        date = split[0]
+        name = split[1]
+        _id = split[2]
+        if not re.search(r"[0-1][0-9]:[0-5][0-9]-[0-1][0-9]:[0-5][0-9]", split[3]):
+            raise Exception("Invalid time format!\nMust be hh:mm-hh:mm")
+        smo, emo = split[3].split("-")
+        is_next = False
+        jmo, jaf = [], []
+        saf, eaf = "", ""
+        for line in split[4:]:
+            if t := re.search(r"[0-1][0-9]:[0-5][0-9]-[0-1][0-9]:[0-5][0-9]", line):
+                saf, eaf = t.group().split("-")
+                is_next = True
+                continue
+            if is_next:
+                jaf.append(line)
+            else:
+                jmo.append(line)
+        return date, name, _id, Worker.format_time(smo), Worker.format_time(emo), Worker.format_time(saf), Worker.format_time(eaf), jmo, jaf
+
 
     def run(self) -> None:
         try:
             report = ConstructionSiteReport(self.file_name)
             for page in self.data:
-                report.add_page(page["date"], page["name"], page["id"], 
-                                self.change_format(page["smo"]), self.change_format(page["emo"]), 
-                                self.change_format(page["saf"]), self.change_format(page["eaf"]), 
-                                page["jmo"], page["jaf"])
+                report.add_page(*self.split_data(page))
                 self.create_one.emit()
             report.save(self.output_dir)
         except PermissionError:
             self.error.emit("Permission denied! Maybe the file is open")
         except Exception as msg:
-            self.error.emit(msg)
+            self.error.emit(str(msg))
         else:
             self.end.emit()
 
@@ -78,9 +101,11 @@ class MainWindow(QMainWindow):
         self.btn_create.hide()
         if self.progress:
             self.progress.setValue(0)
+            self.frame.setStyleSheet("QProgressBar {border: 1px solid white;border-radius: 3px;text-align: center;background-color: white;color: black;} QProgressBar::chunk {background-color: green;}")
             self.frame.show()
             return self.progress
         self.frame = QFrame(self.centralwidget)
+        self.frame.setStyleSheet("QProgressBar {border: 1px solid white;border-radius: 3px;text-align: center;background-color: white;color: black;} QProgressBar::chunk {background-color: green;}")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.verticalLayout = QVBoxLayout(self.frame)
@@ -107,15 +132,16 @@ class MainWindow(QMainWindow):
             input_file = ""
         return file_name, input_file, output_dir
 
-
     def _on_btn_create_clicked(self) -> None:
         file_name, input_file, output_dir = self.get_input()
         if not input_file:
             return
         with open(input_file, mode="r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-        self.create_progressbar().setMaximum(len(data))
-        self._thread = Worker(file_name, output_dir, data, self)
+            self.data = re.sub(r'\n\n\n+', r'\n\n\n', f.read()).split("\n\n\n")
+            if not self.data[-1]:
+                self.data = self.data[:-1]
+        self.create_progressbar().setMaximum(len(self.data))
+        self._thread = Worker(file_name, output_dir, self.data, self)
         self._thread.create_one.connect(self._on_add_page)
         self._thread.error.connect(self._on_end_create)
         self._thread.end.connect(self._on_end_create)
@@ -126,7 +152,8 @@ class MainWindow(QMainWindow):
     
     def _on_end_create(self, msg: str = "") -> None:
         if msg:
-            QMessageBox(QMessageBox.Icon.Critical, "Error", msg, QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel).exec_()
+            self.frame.setStyleSheet("QProgressBar {border: 1px solid white;border-radius: 3px;text-align: center;background-color: white;color: black;} QProgressBar::chunk {background-color: red;}")
+            QMessageBox(QMessageBox.Icon.Critical, "Error", self.data[self.progress.value()]+"\n\n" + msg, QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel).exec_()
         else:
             QMessageBox(QMessageBox.Icon.Information, "Info", "Created successfully!", QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel).exec_()
         self.frame.hide()
@@ -143,6 +170,7 @@ class MainWindow(QMainWindow):
 
 if __name__ == '__main__':
     module.hide_console()
+    module.alert_excepthook()
     app = QApplication(sys.argv)
     main = MainWindow()
     sys.exit(app.exec_())

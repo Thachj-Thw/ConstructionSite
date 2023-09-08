@@ -1,65 +1,130 @@
-[
-    {
-        "date": "03/09/2023", 
-        "name": "Fushan - Bắc Ninh", 
-        "id": "202305IG001", 
-        "smo": "06:00", 
-        "emo": "12:00", 
-        "jmo": [
-            "kiểm tra dây link"
-            ], 
-        "saf": "13:30", 
-        "eaf": "17:30", 
-        "jaf": [
-            "test", 
-            "test2"
-            ]
-    },
-    {
-        "date": "04/09/2023", 
-        "name": "Fushan - Bắc Ninh", 
-        "id": "202305IG001", 
-        "smo": "06:00",
-        "emo": "12:00", 
-        "jmo": [
-            "kiểm tra dây link"
-            ], 
-        "saf": "13:30", 
-        "eaf": "17:30", 
-        "jaf": [
-            "test", 
-            "test2"
-            ]
-    },
-    {
-        "date": "05/09/2023", 
-        "name": "Fushan - Bắc Ninh",
-        "id": "202305IG001", 
-        "smo": "06:00", 
-        "emo": "12:00", 
-        "jmo": [
-            "kiểm tra dây link"
-            ], 
-        "saf": "13:30", "eaf": "17:30", 
-        "jaf": [
-            "test", 
-            "test2"
-            ]
-    },
-    {
-        "date": "06/09/2023", 
-        "name": "Fushan - Bắc Ninh", 
-        "id": "202305IG001", 
-        "smo": "06:00", 
-        "emo": "12:00", 
-        "jmo": [
-            "kiểm tra dây link"
-            ], 
-        "saf": "13:30", 
-        "eaf": "17:30", 
-        "jaf": [
-            "test",
-            "test2"
-            ]
-    }
-]
+03/09/2023
+Fushan - Bắc Ninh
+202305IG001
+06:00-12:00
+kiểm tra dây link
+13:30-17:30
+test
+test2
+
+
+04/09/2023
+Fushan - Bắc Ninh
+202305IG001
+06:00-12:00
+kiểm tra dây link
+test 1
+13:30-17:30
+test
+test2
+test3
+
+
+04/09/2023
+Fushan - Bắc Ninh
+202305IG001
+06:00-12:00
+kiểm tra dây link
+test 1
+13:30-17:30
+test
+test2
+test3
+
+
+04/09/2023
+Fushan - Bắc Ninh
+202305IG001
+06:00-12:00
+kiểm tra dây link
+test 1
+13:30-17:30
+test
+test2
+test3
+
+
+04/09/2023
+Fushan - Bắc Ninh
+202305IG001
+06:00-12:00
+kiểm tra dây link
+test 1
+13:30-17:30
+test
+test2
+test3
+
+
+04/09/2023
+Fushan - Bắc Ninh
+202305IG001
+06:00-12:00
+kiểm tra dây link
+test 1
+13:30-17:30
+test
+test2
+test3
+
+
+04/09/2023
+Fushan - Bắc Ninh
+202305IG001
+06:00-12:00
+kiểm tra dây link
+test 1
+13:30-17:30
+test
+test2
+test3
+
+
+04/09/2023
+Fushan - Bắc Ninh
+202305IG001
+06:00-12:00
+kiểm tra dây link
+test 1
+13:30-17:30
+test
+test2
+test3
+
+
+
+04/09/2023
+Fushan - Bắc Ninh
+202305IG001
+06:00-12:00
+kiểm tra dây link
+test 1
+13:30-17:30
+test
+test2
+test3
+
+
+
+
+
+
+
+
+04/09/2023
+Fushan - Bắc Ninh
+
+06:00-12:00
+kiểm tra dây link
+test 1
+13:30-17:30
+test
+test2
+test3
+
+
+asdfasdf
+llinh tinh
+z3MYzY4X8c49eZmSJ1aTSJ63LwJ9r6RIEryH
+06:00-12:00
+cho nos sai format
