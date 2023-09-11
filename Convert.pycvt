@@ -1,6 +1,6 @@
 [Setup]
 Converter = PyInstaller
-AppName = "DHCS"
+AppName = "DHCSR"
 InputFile = E:\Information Technology\Python\Tools\ConstructionSite\main.py
 OutputDir = E:\Information Technology\Python\Tools\ConstructionSite\Application
 Icon = NONE
