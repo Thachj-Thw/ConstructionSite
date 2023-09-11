@@ -1,15 +1,15 @@
 [Setup]
 Converter = PyInstaller
 AppName = "DHCSR"
-InputFile = E:\Information Technology\Python\Tools\ConstructionSite\main.py
-OutputDir = E:\Information Technology\Python\Tools\ConstructionSite\Application
+InputFile = *ThisDir*\main.py
+OutputDir = *ThisDir*\Application
 Icon = NONE
 
 [Option]
 one-file
 
 [Data]
-Source E:\Information Technology\Python\Tools\ConstructionSite\ui\main.ui DestDir ui
-Source E:\Information Technology\Python\Tools\ConstructionSite\DHConstructionSite\base.docx DestDir DHConstructionSite
+Source *ThisDir*\ui\main.ui DestDir ui
+Source *ThisDir*\DHConstructionSite\base.docx DestDir DHConstructionSite
 
 [Pathex]
