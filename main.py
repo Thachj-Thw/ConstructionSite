@@ -7,6 +7,7 @@ from PyQt5.QtGui import QCloseEvent
 from PyQt5.uic import loadUi
 from Cache import Cache, CacheObject
 from DHConstructionSite import ConstructionSiteReport
+from Widgets import lineEditPathDragDrop
 import re
 
 

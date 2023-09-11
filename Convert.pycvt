@@ -1,0 +1,15 @@
+[Setup]
+Converter = PyInstaller
+AppName = "DHCS"
+InputFile = E:\Information Technology\Python\Tools\ConstructionSite\main.py
+OutputDir = E:\Information Technology\Python\Tools\ConstructionSite\Application
+Icon = NONE
+
+[Option]
+one-file
+
+[Data]
+Source E:\Information Technology\Python\Tools\ConstructionSite\ui\main.ui DestDir ui
+Source E:\Information Technology\Python\Tools\ConstructionSite\DHConstructionSite\base.docx DestDir DHConstructionSite
+
+[Pathex]
