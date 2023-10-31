@@ -42,7 +42,7 @@ class Worker(QThread):
         jmo, jaf = [], []
         saf, eaf = "", ""
         for line in split[4:]:
-            if t := re.search(r"[0-1][0-9]:[0-5][0-9]-[0-1][0-9]:[0-5][0-9]", line):
+            if t := re.search(r"[0-2][0-9]:[0-5][0-9]-[0-2][0-9]:[0-5][0-9]", line):
                 saf, eaf = t.group().split("-")
                 is_next = True
                 continue
